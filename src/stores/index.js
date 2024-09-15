@@ -5,7 +5,7 @@ stores.use(
   createPersistedState({
     key: (id) => `__persisted__${id}`,
     storage: sessionStorage,
-    debug: true
+    // debug: true
   })
 );
 

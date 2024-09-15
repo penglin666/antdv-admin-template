@@ -46,14 +46,8 @@ watch(
 <template>
   <a-layout-sider :collapsed="collapsed" :trigger="null" collapsible theme="dark">
     <div class="logo">logo</div>
-    <a-menu
-      v-model:selectedKeys="state.selectedKeys"
-      v-model:openKeys="state.openKeys"
-      :items="items"
-      mode="inline"
-      @click="menuClick"
-      theme="dark"
-    />
+    <a-menu v-model:selectedKeys="state.selectedKeys" v-model:openKeys="state.openKeys" :items="items" mode="inline"
+      @click="menuClick" theme="dark" />
   </a-layout-sider>
 </template>
 

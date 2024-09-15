@@ -5,6 +5,8 @@
 </template>
 
 <script setup>
+const route = useRoute();
+console.log(route, 'route')
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 </script>
 
@@ -13,6 +15,7 @@ import zhCN from "ant-design-vue/es/locale/zh_CN";
   margin: 0;
   padding: 0;
 }
+
 html,
 body,
 #app {

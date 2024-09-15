@@ -1,20 +1,8 @@
 <template>
   <a-layout-content>
-    <a-tabs
-      v-model:activeKey="pageTab.activeKey"
-      type="editable-card"
-      @tabScroll="callback"
-      size="small"
-      @edit="changePageTabs($event, 'closeSingleTab')"
-      hideAdd
-      @change="tabChange"
-    >
-      <a-tab-pane
-        v-for="item in pageTab.list"
-        :key="item.path"
-        :tab="item.label"
-        :closable="item.path !== '/home'"
-      >
+    <a-tabs v-model:activeKey="pageTab.activeKey" type="editable-card" @tabScroll="callback" size="small"
+      @edit="changePageTabs($event, 'closeSingleTab')" hideAdd @change="tabChange">
+      <a-tab-pane v-for="item in pageTab.list" :key="item.path" :tab="item.label" :closable="item.path !== '/home'">
         <router-view></router-view>
       </a-tab-pane>
       <template #rightExtra>
@@ -79,20 +67,25 @@ const reloadCurrentPage = () => {
 <style scoped lang="scss">
 ::v-deep(.ant-tabs) {
   height: 100% !important;
+
   .ant-tabs-nav {
     margin-bottom: 0;
+
     .ant-tabs-tab {
       background-color: #fff;
+
       &.ant-tabs-tab-active {
         background-color: #f5f5f5;
         border-bottom: 0;
         border-bottom-color: transparent;
       }
+
       .ant-tabs-tab-remove {
         line-height: normal;
         width: 16px;
         height: 16px;
         border-radius: 50%;
+
         &:hover {
           background-color: #ff4d4f;
           color: #fff;
@@ -100,13 +93,16 @@ const reloadCurrentPage = () => {
       }
     }
   }
+
   .ant-tabs-content-holder {
     padding: 12px;
   }
+
   .ant-tabs-content {
     height: 100%;
     overflow: auto;
   }
+
   .ant-tabs-extra-content {
     margin-right: 12px;
   }

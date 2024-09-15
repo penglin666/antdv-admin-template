@@ -1,6 +1,7 @@
 <script setup>
 import avatar from "@/assets/avatar.jpg";
 import { useUserStore } from "@/stores/modules/user";
+import { useSettingStore } from "@/stores/modules/setting";
 import { CompressOutlined, ExpandOutlined } from "@ant-design/icons-vue";
 import useFullScreen from "@/hooks/useFullScreen";
 import "dayjs/locale/zh-cn";
@@ -9,12 +10,15 @@ import axios from "axios";
 let interval = null; //定时器
 const router = useRouter();
 const store = useUserStore();
+const settingStore = useSettingStore();
 const { isFull, requestFullScreen, exitFullScreen } = useFullScreen();
 const dateTime = ref("");
 const weather = ref("");
 const handleLoginOut = () => {
   store.logout();
   clearInterval(interval);
+  settingStore.pageTab.list = [];
+  settingStore.pageTab.activeKey = null;
   router.replace("/login");
 };
 
@@ -47,11 +51,19 @@ onMounted(() => {
 });
 onUnmounted(() => {
   clearInterval(interval);
+  interval = null;
 });
 watch(
-  () => isFull,
+  () => isFull.value,
   (val) => {
-    console.log(val, "pl");
+    if (val) {
+      interval = setInterval(() => {
+        getDateTime();
+      }, 1000);
+    } else {
+      clearInterval(interval)
+      interval = null;
+    }
   }
 );
 </script>
@@ -92,14 +104,17 @@ watch(
   display: flex;
   justify-content: space-between;
   color: #fff;
+
   .header-left {
     display: flex;
   }
+
   .header-right {
     margin: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .header-right-item {
       margin-left: 12px;
     }

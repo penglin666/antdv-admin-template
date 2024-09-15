@@ -7,7 +7,6 @@ const router = createRouter({
     {
       path: "/",
       component: Layout,
-      meta: { title: "首页" },
       redirect: { name: "home" },
       children: [
         {
