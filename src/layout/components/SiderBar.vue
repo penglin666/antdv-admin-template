@@ -24,17 +24,14 @@ watch(
       .split("/")
       .filter((item) => item && item.trim())
       .map((item) => "/" + item);
-    state.selectedKeys = keys;
-  },
-  {
-    immediate: true
-  }
-);
-watch(
-  () => props.collapsed,
-  () => {
-    if (!props.collapsed) {
-      state.openKeys = state.selectedKeys.slice(0, state.selectedKeys.length - 1);
+    if (keys.length) {
+      state.selectedKeys = keys
+      if (keys.length > 1) {
+        if (!props.collapsed)
+          state.openKeys = keys.slice(0, keys.length - 1)
+      } else {
+        state.openKeys = []
+      }
     }
   },
   {

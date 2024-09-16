@@ -1,5 +1,5 @@
 <script setup>
-import Content from "./components/Content.vue";
+import Tag from "./components/Tag.vue";
 import Header from "./components/Header.vue";
 import SideBar from "./components/SiderBar.vue";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue";
@@ -12,17 +12,14 @@ const collapsed = ref(false);
     <a-layout>
       <Header>
         <template #headerLeft>
-          <MenuUnfoldOutlined
-            v-if="collapsed"
-            class="trigger"
-            @click="() => (collapsed = !collapsed)"
-          />
+          <MenuUnfoldOutlined v-if="collapsed" class="trigger" @click="() => (collapsed = !collapsed)" />
           <MenuFoldOutlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
         </template>
       </Header>
-      <Content>
+      <Tag />
+      <a-layout-content>
         <RouterView />
-      </Content>
+      </a-layout-content>
       <a-layout-footer style="text-align: center">
         Ant Design ©2024 Created by Ant UED
       </a-layout-footer>
@@ -34,6 +31,7 @@ const collapsed = ref(false);
 .ant-layout {
   width: 100%;
   height: 100%;
+
   .trigger {
     font-size: 18px;
     line-height: 64px;

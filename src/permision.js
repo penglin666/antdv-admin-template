@@ -1,7 +1,7 @@
 import NProgress from "nprogress";
 import { message } from "ant-design-vue";
 import { useUserStore } from "@/stores/modules/user";
-import { useSettingStore } from "@/stores/modules/setting";
+import { useTagStore } from "@/stores/modules/tag";
 import router from "./router";
 NProgress.configure({ showSpinner: false });
 const whiteNameList = ["login", "404"];
@@ -43,9 +43,9 @@ router.beforeEach(async (to, from, next) => {
   }
 });
 router.afterEach((to, from, failure) => {
-  const settingStore = useSettingStore();
+  const tagStore = useTagStore();
   if (!whiteNameList.includes(to.name)) {
-    settingStore.generatePageTabs({ path: to.path, label: to.meta.title });
+    tagStore.add({ key: to.path, label: to.meta.title, closable: to.path !== '/home' });
   }
   document.title = to.meta.title;
   NProgress.done();

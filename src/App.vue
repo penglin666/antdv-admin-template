@@ -1,12 +1,10 @@
 <template>
-  <a-config-provider :locale="zhCN">
+  <a-config-provider :locale="zhCN" :theme="{ cssVar: true }">
     <router-view></router-view>
   </a-config-provider>
 </template>
 
 <script setup>
-const route = useRoute();
-console.log(route, 'route')
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 </script>
 
