@@ -38,10 +38,14 @@ const collapsed = ref(false);
     padding: 0 24px;
     cursor: pointer;
     transition: color 0.3s;
+
+    &:hover {
+      color: #1890ff;
+    }
   }
 
-  .trigger:hover {
-    color: #1890ff;
+  .ant-layout-content {
+    padding: 24px;
   }
 }
 </style>

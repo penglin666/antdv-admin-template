@@ -33,17 +33,17 @@ export const useUserStore = defineStore(
       });
     };
     /** 登出 */
-    const logout = () => {
+    const clearProfile = () => {
       userInfo.value = {};
-      sessionStorage.clear();
-      localStorage.clear();
+      // sessionStorage.clear();
+      // localStorage.clear();
     };
     return {
       menus,
       login,
       userInfo,
       fetchPermsAndMenus,
-      logout
+      clearProfile
     };
   },
   { persist: true }

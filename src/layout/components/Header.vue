@@ -15,10 +15,10 @@ const { isFull, requestFullScreen, exitFullScreen } = useFullScreen();
 const dateTime = ref("");
 const weather = ref("");
 const handleLoginOut = () => {
-  store.logout();
+  store.clearProfile();
   clearInterval(interval);
-  tagStore.pageTab.list = [];
-  tagStore.pageTab.activeKey = null;
+  tagStore.tag.items = [];
+  tagStore.tag.activeKey = null;
   router.replace("/login");
 };
 
@@ -90,7 +90,7 @@ watch(
             <a-menu-item>
               <router-link to="/setting">编辑资料</router-link>
             </a-menu-item>
-            <a-menu-item @click="handleLoginOut"> 退出登录</a-menu-item>
+            <a-menu-item @click="handleLoginOut" danger> 退出登录</a-menu-item>
           </a-menu>
         </template>
       </a-dropdown>
