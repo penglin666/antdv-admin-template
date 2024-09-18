@@ -12,33 +12,7 @@
 				<a-dropdown placement="bottomRight">
 					<a-button :icon="h(EllipsisOutlined)" />
 					<template #overlay>
-						<a-menu @click="({ key }) => tagStore.edit(route.fullPath, key, router)" :items="[
-							{
-								key: 'closeCurrent',
-								label: '关闭当前',
-								icon: h(CloseOutlined),
-							},
-							{
-								key: 'closeLeft',
-								label: '关闭左侧',
-								icon: h(ArrowLeftOutlined)
-							},
-							{
-								key: 'closeRight',
-								label: '关闭右侧',
-								icon: h(ArrowRightOutlined)
-							},
-							{
-								key: 'closeOther',
-								label: '关闭其它',
-								icon: h(MinusCircleOutlined)
-							},
-							{
-								key: 'closeAll',
-								label: '关闭全部',
-								icon: h(CloseCircleOutlined)
-							}
-						]" />
+						<a-menu @click="({ key }) => tagStore.edit(route.fullPath, key, router)" :items="dropdownMenuItems" />
 					</template>
 				</a-dropdown>
 			</a-space-compact>
@@ -46,7 +20,7 @@
 	</a-tabs>
 </template>
 <script setup>
-import { h } from 'vue'
+import { h, onMounted } from 'vue'
 import { useTagStore } from "@/stores/modules/tag";
 import {
 	EllipsisOutlined,
@@ -61,6 +35,81 @@ const tagStore = useTagStore();
 const tag = computed(() => tagStore.tag);
 const route = useRoute();
 const router = useRouter();
+const dropdownMenuItems = ref([
+	{
+		key: 'closeCurrent',
+		label: '关闭当前',
+		icon: h(CloseOutlined),
+	},
+	{
+		key: 'closeLeft',
+		label: '关闭左侧',
+		icon: h(ArrowLeftOutlined)
+	},
+	{
+		key: 'closeRight',
+		label: '关闭右侧',
+		icon: h(ArrowRightOutlined)
+	},
+	{
+		key: 'closeOther',
+		label: '关闭其它',
+		icon: h(MinusCircleOutlined)
+	},
+	{
+		key: 'closeAll',
+		label: '关闭全部',
+		icon: h(CloseCircleOutlined)
+	}
+])
+const getDropdownMenuItems = (tagInfo) => {
+	const { activeKey, items } = tagInfo;
+	const index = items.findIndex(item => item.key === activeKey);
+	dropdownMenuItems.value.forEach(item => {
+		if (item.key === 'closeCurrent') {
+			if (activeKey === '/home') {
+				item.disabled = true
+			} else {
+				item.disabled = false
+			}
+		}
+		if (item.key === 'closeLeft') {
+			if (!items.slice(1, index).length) {// 当前页左侧除了首页没有其它标签页
+				item.disabled = true
+			} else {
+				item.disabled = false
+			}
+		}
+		if (item.key === 'closeRight') {
+			if (index + 1 >= items.length) {// 当前页右侧没有其它标签页
+				item.disabled = true
+			} else {
+				item.disabled = false
+			}
+		}
+		if (item.key === 'closeOther') {//首页、当前页
+			if (items.length <= 2) {
+				item.disabled = true
+			} else {
+				item.disabled = false
+			}
+		}
+		if (item.key === 'closeAll') {//
+			if (items.length <= 1) {
+				item.disabled = true
+			} else {
+				item.disabled = false
+			}
+		}
+	})
+}
+watch(() => tagStore.tag, (val) => {
+	// console.log(tagInfo, 'iii')
+	getDropdownMenuItems(val)
+}, {
+	immediate: true,
+	deep: true
+})
 </script>
 <style scoped lang="scss">
 ::v-deep(.ant-tabs-nav) {
