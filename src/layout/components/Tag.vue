@@ -1,7 +1,8 @@
 <template>
 
 	<a-tabs v-model:activeKey="tag.activeKey" type="editable-card" size="small"
-		@edit="(key) => tagStore.edit(key, 'closeCurrent')" hideAdd @change="(path) => router.push(path)" :tabBarGutter="6">
+		@edit="(key) => tagStore.edit(key, 'closeCurrent', router)" hideAdd @change="(path) => router.push(path)"
+		:tabBarGutter="6">
 		<a-tab-pane v-for="item in tag.items" :key="item.key" :tab="item.label" :closable="item.closable">
 		</a-tab-pane>
 		<template #rightExtra>

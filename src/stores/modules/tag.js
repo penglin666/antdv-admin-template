@@ -1,10 +1,9 @@
-
 export const useTagStore = defineStore(
   "tag",
   () => {
     const tag = reactive({
       activeKey: "",
-      items: []
+      items: [],
     });
     const add = (data) => {
       const isExist = tag.items.some((item) => item.key === data.key);
@@ -37,14 +36,18 @@ export const useTagStore = defineStore(
           break;
         case "closeAll": //关闭所有窗口
           tag.items = [tag.items[0]];
-          router.push(tag.items[0].key);
           break;
+      }
+      if (type === "closeAll") {
+        router.push(tag.items[0].key);
+      } else {
+        router.push(tag.activeKey);
       }
     };
     return {
       tag,
       add,
-      edit
+      edit,
     };
   },
   { persist: true }
