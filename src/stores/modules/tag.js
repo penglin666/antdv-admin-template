@@ -17,8 +17,12 @@ export const useTagStore = defineStore(
       switch (type) {
         case "closeCurrent":
           if (key !== "/home") {
+            if (tag.items[index + 1]) {
+              tag.activeKey = tag.items[index + 1].key;
+            } else {
+              tag.activeKey = tag.items[index - 1].key;
+            }
             tag.items.splice(index, 1);
-            tag.activeKey = tag.items[index - 1].key;
           }
           break;
         case "closeLeft":
